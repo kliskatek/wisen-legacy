@@ -106,6 +106,11 @@ html:lang(zh) .kicker { letter-spacing: .3em; }
   background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 70%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 55%, #000));
   box-shadow: 0 1cqh 3cqh rgba(0, 0, 0, .45), inset 0 0 0 .35cqh rgba(255, 255, 255, .18); }
 .avatar svg { width: 100%; height: 100%; display: block; fill: rgba(255, 255, 255, .88); }
+/* con el ratón encima, el avatar crece por encima de los de al lado (y enseña su rasgo: lucirRasgos) */
+.avatar { position: relative; transition: transform .25s ease; }
+.avatar:hover { transform: scale(2.2); z-index: 5; }
+.persona:has(.avatar:hover), .pieza:has(.avatar:hover) { z-index: 20; }
+.equipo .avatar:hover { transform: scale(1.25); }
 .avatar.kliska { --c: var(--naranja); box-shadow: 0 0 0 .45cqh rgba(255, 128, 0, .35), 0 0 4cqh rgba(255, 128, 0, .45); }
 .persona { display: flex; flex-direction: column; align-items: center; gap: 1.2cqh; }
 .persona > span { font: 600 2.2cqh "Oxanium", var(--texto); white-space: nowrap; }
@@ -127,8 +132,12 @@ html:lang(zh) .kicker { letter-spacing: .3em; }
 @keyframes encaja { from { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.8); } 60% { opacity: 1; } to { opacity: 1; transform: none; } }
 .puzle .sello { position: absolute; left: 50%; top: 50%; z-index: 3; padding: 1.4cqh 2.4cqw; border: .5cqh solid var(--ok); border-radius: 1.6cqh;
   color: var(--ok); background: rgba(17, 17, 17, .82); font: 800 4.2cqh var(--titulos); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
-  transform: translate(-50%, -50%) rotate(-8deg); animation: sello .5s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: 3.6s; box-shadow: 0 0 5cqh rgba(46, 189, 107, .35); }
+  transform: translate(-50%, -50%) rotate(-8deg); box-shadow: 0 0 5cqh rgba(46, 189, 107, .35);
+  animation: sello .5s cubic-bezier(.3, 1.6, .5, 1) 3.6s both, sello-baja .8s ease-in-out 5.8s forwards; }
 @keyframes sello { from { opacity: 0; transform: translate(-50%, -50%) rotate(-8deg) scale(2.2); } to { opacity: 1; transform: translate(-50%, -50%) rotate(-8deg) scale(1); } }
+/* luego baja al borde del puzle, más pequeño, para no tapar a nadie */
+@keyframes sello-baja { from { opacity: 1; top: 50%; transform: translate(-50%, -50%) rotate(-8deg) scale(1); }
+  to { opacity: 1; top: 100%; transform: translate(-50%, -35%) rotate(-5deg) scale(.68); } }
 .puzle::after { content: ""; position: absolute; inset: -2cqh; border-radius: 3cqh; box-shadow: 0 0 0 0 rgba(46, 189, 107, 0);
   animation: brillo-puzle 1.2s ease both; animation-delay: 3.4s; pointer-events: none; }
 @keyframes brillo-puzle { to { box-shadow: 0 0 8cqh 0 rgba(46, 189, 107, .25); } }
@@ -476,7 +485,123 @@ html:lang(zh) .bus-nombre { letter-spacing: .2em; }
 .disenio .avatar { --t: 6.4cqh; grid-row: 1 / span 2; }
 .disenio .persona > span { align-self: end; font-size: 2.1cqh; }
 .disenio small { align-self: start; color: var(--gris); font-size: 1.7cqh; white-space: nowrap; }
-.avatar.cura { box-shadow: 0 1cqh 3cqh rgba(0, 0, 0, .45), inset 0 0 0 .35cqh rgba(255, 255, 255, .12); }
+/* el rasgo, encima del avatar neutro y con su propio fondo: aparece al lucirlo, con un saltito */
+.avatar.con-rasgo { position: relative; }
+.avatar.con-rasgo > svg { transition: opacity .5s; }
+.avatar .rasgo { position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c2) 70%, #fff), var(--c2) 55%, color-mix(in srgb, var(--c2) 55%, #000)); }
+.avatar.luce { animation: luce .6s ease; }
+.avatar.luce > svg:first-child { opacity: 0; }
+.avatar.luce .rasgo { opacity: 1; }
+@keyframes luce { 40% { transform: scale(1.14) rotate(-4deg); } 70% { transform: scale(.97); } }
+.avatar.ausente .rasgo { background: none; }
+.avatar.ausente > svg:first-child { transition: transform .9s ease-in-out, opacity .5s; }
+.avatar.ausente.luce { animation: none; }
+.avatar.ausente.luce > svg:first-child { opacity: 1; transform: translateX(115%); }
+.avatar.ausente.luce .rasgo { transition-delay: .7s; }
+.avatar.oraculo .bola, .avatar.oraculo .destellos path { transform-box: fill-box; transform-origin: center; }
+.avatar.oraculo.luce .bola { animation: bola 1.4s ease-in-out infinite; }
+@keyframes bola { 50% { filter: drop-shadow(0 0 3px #C9B5FF) brightness(1.25); } }
+.avatar.oraculo.luce .destellos path { animation: destello 1s ease-in-out infinite; }
+.avatar.oraculo.luce .destellos path + path { animation-delay: .5s; }
+@keyframes destello { 0%, 100% { transform: scale(.4); opacity: .3; } 50% { transform: scale(1.2); opacity: 1; } }
+.avatar.tarta.luce .ondas path { animation: onda 1.2s ease-out infinite; opacity: 0; }
+.avatar.tarta.luce .ondas path:nth-child(2) { animation-delay: .25s; }
+.avatar.tarta.luce .ondas path:nth-child(3) { animation-delay: .5s; }
+@keyframes onda { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
+.avatar.zahori .horquilla { transform-box: view-box; transform-origin: 32px 56px; }
+.avatar.zahori.luce .horquilla { animation: zahori .9s ease-in-out infinite; }
+@keyframes zahori { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-7deg); } 40% { transform: rotate(5deg); } 55% { transform: rotate(-3deg); } }
+.avatar.zahori.luce .agua { animation: agua 1.8s ease-in-out infinite; }
+@keyframes agua { 50% { transform: translateY(-1.2px); opacity: .6; } }
+.avatar.pala.luce .pelota { animation: pelota 1.3s ease-in-out infinite alternate; }
+@keyframes pelota { from { transform: translate(-6px, 4px); } to { transform: translate(18px, -1px); } }
+.avatar.sonambulo .grito { opacity: 0; transform-box: fill-box; transform-origin: 70% 100%; }
+.avatar.sonambulo.luce .zzz { animation: zzz 3.5s ease both; }
+.avatar.sonambulo.luce .grito { animation: grito 3.5s ease both; }
+@keyframes zzz { 0% { opacity: 0; transform: translateY(2px); } 15%, 45% { opacity: 1; transform: translateY(0); } 50%, 100% { opacity: 0; transform: translateY(-1.5px); } }
+@keyframes grito { 0%, 50% { opacity: 0; transform: scale(.3); } 56% { opacity: 1; transform: scale(1.2) rotate(-6deg); } 62% { transform: scale(1) rotate(5deg); }
+  68% { transform: rotate(-4deg); } 74% { transform: rotate(3deg); } 80%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.avatar.cumples .confeti rect { transform-box: fill-box; transform-origin: center; }
+.avatar.cumples.luce .confeti rect { animation: confeti 1.6s linear infinite; animation-delay: calc(var(--k) * -.27s); }
+@keyframes confeti { from { translate: 0 -4px; rotate: 0deg; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { translate: 2px 14px; rotate: 300deg; opacity: 0; } }
+.avatar.altavoz.luce .rasgo { animation: vibra .12s linear infinite; }
+@keyframes vibra { 25% { translate: .6px -.4px; } 50% { translate: -.5px .5px; } 75% { translate: .4px .5px; } }
+.avatar.altavoz.luce .voz path { animation: onda .9s ease-out infinite; opacity: 0; }
+.avatar.altavoz.luce .voz path:nth-child(2) { animation-delay: .15s; }
+.avatar.altavoz.luce .voz path:nth-child(3) { animation-delay: .3s; }
+.avatar.navaja .h1, .avatar.navaja .h2, .avatar.navaja .h3 { opacity: 0; transition: rotate .55s cubic-bezier(.3, 1.4, .5, 1), opacity .3s; }
+.avatar.navaja .h1 { transform-origin: 22px 56px; rotate: 130deg; }
+.avatar.navaja .h2 { transform-origin: 22px 56px; rotate: 58deg; }
+.avatar.navaja .h3 { transform-origin: 42px 56px; rotate: -130deg; }
+.avatar.navaja.luce :is(.h1, .h2, .h3) { opacity: 1; rotate: 0deg; }
+.avatar.navaja.luce .h2 { transition-delay: .15s; } .avatar.navaja.luce .h3 { transition-delay: .3s; }
+.avatar.pedestal .figura { transform-origin: 32px 20px; transition: scale .6s ease, translate .6s ease; }
+.avatar.pedestal .peana { translate: 0 14px; transition: translate .6s ease; }
+.avatar.pedestal .laurel { opacity: 0; transition: opacity .4s ease; }
+.avatar.pedestal.luce .figura { scale: .72; translate: 0 -1px; }
+.avatar.pedestal.luce .peana { translate: 0 0; }
+.avatar.pedestal.luce .laurel { opacity: 1; transition-delay: .6s; }
+.avatar.padel.luce .bola { animation: bola-padel 1.1s ease-in-out infinite alternate; }
+@keyframes bola-padel { from { translate: -4px -3px; } to { translate: 18px 3px; } }
+.avatar.calidad .marca { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.avatar.calidad.luce .persigue { animation: persigue 1.1s ease-in-out infinite; }
+@keyframes persigue { 0%, 100% { translate: -3px 0; rotate: 3deg; } 50% { translate: 4px 0; rotate: 5deg; } }
+.avatar.calidad .persigue { transform-origin: 32px 60px; }
+.avatar.calidad.luce .prisa { animation: prisa .55s linear infinite; }
+@keyframes prisa { from { translate: 3px 0; opacity: .8; } to { translate: -3px 0; opacity: 0; } }
+.avatar.calidad.luce .marca { animation: marca .3s ease forwards; }
+.avatar.calidad.luce .m0 { animation-delay: .5s; } .avatar.calidad.luce .m1 { animation-delay: 1.2s; } .avatar.calidad.luce .m2 { animation-delay: 1.9s; }
+@keyframes marca { to { stroke-dashoffset: 0; } }
+.avatar.terminator.luce .reflejo { animation: reflejo 1.8s ease-in-out infinite; }
+@keyframes reflejo { from { translate: -12px 0; } to { translate: 26px 0; } }
+.avatar.terminator.luce .ojo { animation: ojo 1.2s ease-in-out infinite; }
+@keyframes ojo { 50% { filter: drop-shadow(0 0 2px #FF2A2A); opacity: .6; } }
+.avatar.monte.luce .senal path { animation: onda 1.2s ease-out infinite; opacity: 0; }
+.avatar.monte.luce .senal path:nth-child(2) { animation-delay: .25s; }
+.avatar.monte.luce .senal path:nth-child(3) { animation-delay: .5s; }
+.avatar.parrilla .llamas path { transform-box: fill-box; transform-origin: 50% 100%; }
+.avatar.parrilla.luce .llamas path { animation: llama .22s ease-in-out infinite alternate; }
+.avatar.parrilla.luce .llamas path:nth-child(2) { animation-delay: .1s; }
+.avatar.parrilla.luce .humo-bbq { animation: humo-bbq 1.6s ease-in-out infinite; }
+@keyframes humo-bbq { 0% { translate: 0 2px; opacity: 0; } 40% { opacity: .8; } 100% { translate: 0 -4px; opacity: 0; } }
+.avatar.hotpot.luce .palillos { animation: palillos 1.4s ease-in-out infinite; }
+@keyframes palillos { 50% { translate: 0 -3px; } }
+.avatar.hotpot.luce .vapor { animation: humo-bbq 1.8s ease-in-out infinite; }
+.avatar.hotpot.luce .burbujas { animation: burbujas .6s steps(2) infinite; }
+@keyframes burbujas { 50% { translate: 1px -.6px; opacity: .3; } }
+.avatar.hotpot .duda { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; }
+.avatar.hotpot.luce .duda { animation: duda 3.5s ease both; }
+@keyframes duda { 0%, 25% { opacity: 0; scale: .3; } 32% { opacity: 1; scale: 1.25; } 40%, 92% { opacity: 1; scale: 1; } 100% { opacity: 0; } }
+.avatar.soldador.luce .punta { animation: punta .5s ease-in-out infinite alternate; }
+@keyframes punta { to { filter: drop-shadow(0 0 2px #FF8A3D); fill: #FFF1C9; } }
+.avatar.soldador.luce .humo-estano { animation: humo-bbq 1.4s ease-in-out infinite; }
+.avatar.speaker.luce .voz path { animation: onda .8s ease-out infinite; opacity: 0; }
+.avatar.speaker.luce .voz path:nth-child(2) { animation-delay: .15s; } .avatar.speaker.luce .voz path:nth-child(3) { animation-delay: .3s; }
+.avatar.speaker.luce .balon { animation: bota .7s cubic-bezier(.5, 0, .5, 1) infinite alternate; }
+@keyframes bota { from { translate: 0 -12px; } to { translate: 0 5px; } }
+.avatar.fotos .flash { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.avatar.fotos.luce .flash { animation: flash 1.1s ease-out infinite .4s; }
+@keyframes flash { 0%, 100% { opacity: 0; scale: .4; } 6% { opacity: 1; scale: 1.1; } 30% { opacity: 0; scale: 1; } }
+.avatar.discute .bronca { transform-box: fill-box; transform-origin: 80% 100%; }
+.avatar.discute.luce .bronca { animation: bronca .5s ease-in-out infinite; }
+@keyframes bronca { 25% { rotate: -5deg; scale: 1.06; } 75% { rotate: 4deg; } }
+.avatar.ia .destello, .avatar.ia .puntos circle { transform-box: fill-box; transform-origin: center; }
+.avatar.ia.luce .destello { animation: destello-ia 1.4s ease-in-out infinite; }
+@keyframes destello-ia { 50% { scale: 1.3; rotate: 45deg; } }
+.avatar.ia.luce .puntos circle { animation: escribe 1s ease-in-out infinite; }
+.avatar.ia.luce .puntos circle:nth-child(2) { animation-delay: .15s; } .avatar.ia.luce .puntos circle:nth-child(3) { animation-delay: .3s; }
+@keyframes escribe { 0%, 60%, 100% { translate: 0 0; opacity: .5; } 30% { translate: 0 -1.2px; opacity: 1; } }
+.avatar.mechero .llama { transform-box: fill-box; transform-origin: 50% 100%; }
+.avatar.mechero.luce .llama { animation: llama .18s ease-in-out infinite alternate; }
+@keyframes llama { from { transform: scale(.92, .86) skewX(-4deg); } to { transform: scale(1.04, 1.08) skewX(4deg); } }
+/* el humo del cigarro sube y se deshace */
+.avatar.fuma .humo { stroke-dasharray: 5 3; }
+.avatar.fuma.luce .humo { animation: humo 1.4s linear infinite; }
+@keyframes humo { from { stroke-dashoffset: 0; transform: translateY(0); } to { stroke-dashoffset: 11; transform: translateY(-1.5px); } }
+/* la patata sale del tubo mientras lo luce y se pierde por el borde */
+.avatar.patatas.luce .patata { animation: patata 3.6s ease-in .4s; }
+@keyframes patata { 0%, 55% { transform: translateX(0); opacity: 1; } 75% { transform: translateX(14px); opacity: 1; } 76%, 90% { opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
 .chip .pie-txt { margin-top: 2cqh; }
 
 

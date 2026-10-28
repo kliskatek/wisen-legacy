@@ -31,7 +31,7 @@ export const UI = {
     girar: '请将手机横放', escena: 'Kliskatek 成员登场' },
 };
 
-const PFC = ['Dani', 'Alex', 'Josean', 'Santi', 'Gabriel', 'Julia', 'Iñakiko', 'Aritz', 'Ibon'];
+const PFC = ['Dani', 'Alex', 'Hoss', 'Santi', 'Gabi', 'Julia', 'Iñakiko', 'Aritz', 'Ibon'];
 
 export const DIAPOS = [
   {
@@ -104,24 +104,24 @@ export const DIAPOS = [
   },
   {
     tipo: 'grupos', dur: 14, anio: 2008.8, cuando: '2008', era: 'farsens', logo: 'img/logo/farsens-viejo.png',
-    izq: ['Ibon', 'Dani', 'Edu', 'Josean'],
+    izq: ['Ibon', 'Dani', 'Edu', 'Hoss'],
     der: ['Felipe', 'Ivan', 'Mikel', 'Myriam'],
     en: { kicker: '2008 · Farsens', titulo: 'A company to take it to market',
       texto: 'Farsens is founded to build the technology and make a living from it. The university group is joined by people from outside, who bring the company side: Felipe as CEO, Ivan as CTO, Mikel in sales and Myriam as secretary.',
       izq: 'From the university', der: 'From outside',
-      cargos: { Josean: 'remote, from Japan', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Sales', Myriam: 'Secretary' } },
+      cargos: { Hoss: 'remote, from Japan', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Sales', Myriam: 'Secretary' } },
     es: { kicker: '2008 · Farsens', titulo: 'Una empresa para llevarla al mercado',
       texto: 'Farsens nace para fabricar la tecnología y vivir de ella. Al grupo de la universidad se suman personas de fuera, que ponen la parte de empresa: Felipe como CEO, Ivan como CTO, Mikel como comercial y Myriam en la secretaría.',
       izq: 'Desde la universidad', der: 'Desde fuera',
-      cargos: { Josean: 'en remoto, desde Japón', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Comercial', Myriam: 'Secretaria' } },
+      cargos: { Hoss: 'en remoto, desde Japón', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Comercial', Myriam: 'Secretaria' } },
     eu: { kicker: '2008 · Farsens', titulo: 'Merkatura eramateko enpresa bat',
       texto: 'Farsens teknologia egin eta horretatik bizitzeko sortu zen. Unibertsitateko taldeari kanpoko pertsonak batu zitzaizkion, enpresaren alderdia ekarri zutenak: Felipe CEO gisa, Ivan CTO gisa, Mikel komertzial gisa eta Myriam idazkaritzan.',
       izq: 'Unibertsitatetik', der: 'Kanpotik',
-      cargos: { Josean: 'urrutitik, Japoniatik', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Komertziala', Myriam: 'Idazkaria' } },
+      cargos: { Hoss: 'urrutitik, Japoniatik', Felipe: 'CEO', Ivan: 'CTO', Mikel: 'Komertziala', Myriam: 'Idazkaria' } },
     zh: { kicker: '2008 · Farsens', titulo: '把技术推向市场的公司',
       texto: 'Farsens 成立，目的是把技术做成产品并以此为生。大学团队迎来了外部成员，带来企业经营的一面：Felipe 任首席执行官，Ivan 任首席技术官，Mikel 负责销售，Myriam 担任秘书。',
       izq: '来自大学', der: '来自外部',
-      cargos: { Josean: '从日本远程工作', Felipe: '首席执行官', Ivan: '首席技术官', Mikel: '销售', Myriam: '秘书' } },
+      cargos: { Hoss: '从日本远程工作', Felipe: '首席执行官', Ivan: '首席技术官', Mikel: '销售', Myriam: '秘书' } },
   },
   {
     tipo: 'chip', dur: 12, anio: 2013, cuando: '2010–2015', era: 'farsens', chip: 'andy100',
