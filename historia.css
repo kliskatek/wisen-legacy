@@ -557,6 +557,10 @@ html:lang(zh) .bus-nombre { letter-spacing: .2em; }
 @keyframes reflejo { from { translate: -12px 0; } to { translate: 26px 0; } }
 .avatar.terminator.luce .ojo { animation: ojo 1.2s ease-in-out infinite; }
 @keyframes ojo { 50% { filter: drop-shadow(0 0 2px #FF2A2A); opacity: .6; } }
+.avatar.terminator .maquina { transform-box: fill-box; transform-origin: center; opacity: 0; }
+.avatar.terminator.luce .maquina { animation: fija .5s ease-out .7s forwards, vigila 1.4s steps(1) 1.2s infinite; }
+@keyframes fija { from { opacity: 0; scale: 1.6; } to { opacity: 1; scale: 1; } }
+@keyframes vigila { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 .avatar.monte.luce .senal path { animation: onda 1.2s ease-out infinite; opacity: 0; }
 .avatar.monte.luce .senal path:nth-child(2) { animation-delay: .25s; }
 .avatar.monte.luce .senal path:nth-child(3) { animation-delay: .5s; }

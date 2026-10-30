@@ -116,7 +116,9 @@ const RASGOS = {
     + '<circle cx="32" cy="25" r="11.5" fill="url(#cromo)"/><g clip-path="url(#cabeza-cromo)"><rect class="reflejo" x="14" y="8" width="5" height="34" fill="#fff" opacity=".7" transform="rotate(25 32 25)"/></g>'
     + `<path d="${CUERPO}" fill="#1B1E22"/><path d="M26.4 43.6 31 58l-4 3.6-5.6-15.4zM37.6 43.6 33 58l4 3.6 5.6-15.4z" fill="#2E3338"/>`
     + '<path d="M22 23.2h8.6l-.8 3.6a2 2 0 0 1-2 1.6h-3.6a2 2 0 0 1-2-1.6zM33.4 23.2H42l-.6 3.6a2 2 0 0 1-2 1.6h-3.6a2 2 0 0 1-2-1.6z" fill="#0D0E10"/>'
-    + '<path d="M30.6 23.6h2.8M20.6 23.4h1.6M42 23.4h1.6" stroke="#0D0E10" stroke-width="1"/><circle class="ojo" cx="38" cy="25.4" r="1.1" fill="#FF2A2A"/>' },
+    + '<path d="M30.6 23.6h2.8M20.6 23.4h1.6M42 23.4h1.6" stroke="#0D0E10" stroke-width="1"/><circle class="ojo" cx="38" cy="25.4" r="1.1" fill="#FF2A2A"/>'
+    + '<g class="maquina" fill="none" stroke="#FFD400"><rect x="18" y="11" width="28" height="28" stroke-width=".6" stroke-dasharray="1.6 1.2"/>'
+    + '<path d="M18 16v-5h5M41 11h5v5M46 34v5h-5M23 39h-5v-5" stroke-width="1.6"/></g>' },
   Jurgi: { clase: 'monte', detras: '<path d="M-2 47 12 22l7 9 13-20 13 22 7-10 14 24z" fill="#4A5A6B"/>'
     + '<path d="M12 22l-3 5.4 3-1.4 2.2 1.6zM32 11l-4.4 6.8 3-1.2 2.4 1.8 2.2-2zM52 23l-2.4 4.2 2.6-1 2 1.2z" fill="#F4F7FA"/>',
   encima: '<path d="M24.6 44.6 22.4 66M39.4 44.6 41.6 66" stroke="#E8772E" stroke-width="2.4" stroke-linecap="round"/>'
